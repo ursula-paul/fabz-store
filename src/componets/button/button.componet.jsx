@@ -13,11 +13,11 @@ const BUTTON_TYPE_CLASSES = {
 	google: "google-sign-in",
 	inverted: "inverted",
 };
-const Button = ({ children, buttonType, ...otherProps }) => {
+const Button = ({ children, buttonType, ...inputOptions }) => {
 	return (
 		<button
 			className={`button-container ${BUTTON_TYPE_CLASSES[buttonType]}`}
-			{...otherProps}
+			{...inputOptions}
 		>
 			{children}
 		</button>
