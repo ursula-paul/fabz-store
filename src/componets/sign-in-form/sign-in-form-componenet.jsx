@@ -1,6 +1,9 @@
+import { useState } from "react";
+
 import FormInput from "../form-input/form-input-component";
 import Button from "../button/button.componet";
-import { useState } from "react";
+
+//import { UserContext } from "../../Contexts/user.context";
 
 import {
 	SignInWithGooglePopup,
@@ -17,37 +20,40 @@ const defaultFormFields = {
 
 const SignInForm = () => {
 	const [formFields, setFormFields] = useState(defaultFormFields);
-
 	const { email, password } = formFields;
+	// console.log(formFields);
 
-	console.log(formFields);
+	//const { setCurrentUser } = useContext(UserContext);
 
 	const resetFormFields = () => {
 		setFormFields(defaultFormFields);
 	};
 
 	const SignInWithGoogle = async () => {
-		const { user } = await SignInWithGooglePopup();
-		await createUserDocumentFromAuth(user);
+		await SignInWithGooglePopup();
+		//setCurrentUser(user);
 	};
 
 	const handleSubmit = async (event) => {
 		event.preventDefault();
+		console.log(email, password);
 
 		try {
-			const response = signInAuthUserWithEmailAndPassword(email, password);
-			console.log(response);
+			const user = await signInAuthUserWithEmailAndPassword(email, password);
+			//console.log(user);
+
 			resetFormFields();
+			//setCurrentUser(user);
 		} catch (error) {
 			switch (error.code) {
 				case "auth/wrong-password":
 					alert("incorrect password for email");
 					break;
-				case "auth/user-not-found":
-					alert("no user associated with this email");
-					break;
+				// case "auth/user-not-found":
+				// 	alert("no user associated with this email");
+				// 	break;
 				default:
-					console.log(error);
+				//console.log(error);
 			}
 		}
 	};
